@@ -12,6 +12,7 @@ import main.java.tetris.game.Tetromino;
 import main.java.tetris.game.TetrominoType;
 import main.java.tetris.ui.GamePane;
 import main.java.tetris.input.InputHandler;
+import main.java.tetris.game.Game;
 
 public class Main extends Application {
     @Override
@@ -20,6 +21,7 @@ public class Main extends Application {
         Canvas canvas = new Canvas(Board.SQUARE_W, Board.SQUARE_H);
         GraphicsContext g = canvas.getGraphicsContext2D();
         Board board = new Board();
+        Game game = new Game();
         GamePane gamePane = new GamePane(canvas);
         Scene scene = new Scene(gamePane, 1280, 720);
         InputHandler input = new InputHandler(scene);
@@ -51,7 +53,7 @@ public class Main extends Application {
                 acc += dt;
 
                 if (acc >= 0.5) {
-                    piece.move(0, 1);
+                    game.tryMove(board, piece, 0, 1);
                     acc = 0;
                 }
 
@@ -59,7 +61,7 @@ public class Main extends Application {
                     downAcc += dt;
 
                     if (downAcc >= 0.05) {
-                        piece.move(0, 1);
+                        game.tryMove(board, piece, 0, 1);
                         downAcc = 0;
                     }
                 }
@@ -70,7 +72,7 @@ public class Main extends Application {
                     leftAcc += dt;
 
                     if (leftAcc >= 0.12) {
-                        piece.move(-1, 0);
+                        game.tryMove(board, piece, -1, 0);
                         leftAcc = 0;
                     }
                 }
@@ -81,7 +83,7 @@ public class Main extends Application {
                     rightAcc += dt;
 
                     if (rightAcc >= 0.12) {
-                        piece.move(1, 0);
+                        game.tryMove(board, piece, 1, 0);
                         rightAcc = 0;
                     }
                 }
@@ -89,7 +91,7 @@ public class Main extends Application {
                     rightAcc = 0;
 
                 if (input.useRotate()) {
-                    piece.rotate();
+                    game.tryRotate(board, piece);
                 }
 
                 board.drawBoard(g);

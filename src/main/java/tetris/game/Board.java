@@ -34,4 +34,22 @@ public class Board {
         g.setStroke(Color.rgb(40, 40, 40));
         g.strokeRect(x * TILE, y * TILE, TILE, TILE);
     }
+
+    public boolean canPlace(int px, int py, int[][] shape) {
+        for (int r = 0; r < shape.length; ++r)
+            for (int c = 0; c < shape[0].length; ++c) {
+                if (shape[r][c] == 0)
+                    continue;
+                int x = px + c;
+                int y = py + r;
+
+                if (x < 0 || x >= W || y >= H)
+                    return false;
+
+                if (y >= 0 && grid[y][x] != 0)
+                    return false;
+            }
+
+        return true;
+    }
 }

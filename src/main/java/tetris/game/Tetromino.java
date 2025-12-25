@@ -78,7 +78,7 @@ public class Tetromino {
         return res;
     }
 
-    private int[][] copy(int[][] src) {
+    public static int[][] copy(int[][] src) {
         int [][] dst = new int[src.length][src[0].length];
 
         for (int i = 0; i < src.length; i++)
@@ -86,4 +86,9 @@ public class Tetromino {
 
         return dst;
     }
+
+    public void setShape(int[][] shape) {
+        this.shape = copy(shape);
+    }
+
 }
