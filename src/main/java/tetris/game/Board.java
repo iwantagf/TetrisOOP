@@ -18,12 +18,8 @@ public class Board {
 
         for (int y = 0; y < H; y++)
             for (int x = 0; x < W; ++x) {
-                if (grid[y][x] != 0) {
-                    drawCell(g, x, y, Color.CYAN);
-                }
-                else {
-                    drawGrid(g, x, y);
-                }
+                drawGrid(g, x, y);
+
             }
     }
 
