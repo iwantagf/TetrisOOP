@@ -34,7 +34,7 @@ public class Main extends Application {
 
 
         AnimationTimer timer = new AnimationTimer() {
-            Tetromino piece = new Tetromino(TetrominoType.T);
+            Tetromino piece = game.spawnTetromino();
             long last = 0;
             double acc = 0;
 
@@ -56,7 +56,7 @@ public class Main extends Application {
                 if (acc >= 0.5) {
                     if (game.checkPlace(board, piece)) {
                         board.placeTetromino(piece);
-                        piece = new Tetromino(TetrominoType.J);
+                        piece = game.spawnTetromino();
                     }
                     acc = 0;
                 }
@@ -67,7 +67,7 @@ public class Main extends Application {
                     if (downAcc >= 0.05) {
                         if (game.checkPlace(board, piece)) {
                             board.placeTetromino(piece);
-                            piece = new Tetromino(TetrominoType.J);
+                            piece = game.spawnTetromino();
                         }
                         downAcc = 0;
                     }

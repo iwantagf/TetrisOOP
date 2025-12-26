@@ -33,4 +33,10 @@ public class Game {
 
         return true;
     }
+
+    public Tetromino spawnTetromino() {
+        TetrominoType[] values = TetrominoType.values();
+
+        return new Tetromino(values[new Random().nextInt(values.length)]);
+    }
 }
