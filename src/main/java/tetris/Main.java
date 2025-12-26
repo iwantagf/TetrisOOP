@@ -31,9 +31,10 @@ public class Main extends Application {
         stage.show();
 
 
-        Tetromino piece = new Tetromino(TetrominoType.T);
+
 
         AnimationTimer timer = new AnimationTimer() {
+            Tetromino piece = new Tetromino(TetrominoType.T);
             long last = 0;
             double acc = 0;
 
@@ -53,7 +54,10 @@ public class Main extends Application {
                 acc += dt;
 
                 if (acc >= 0.5) {
-                    game.tryMove(board, piece, 0, 1);
+                    if (game.checkPlace(board, piece)) {
+                        board.placeTetromino(piece);
+                        piece = new Tetromino(TetrominoType.J);
+                    }
                     acc = 0;
                 }
 
@@ -61,7 +65,10 @@ public class Main extends Application {
                     downAcc += dt;
 
                     if (downAcc >= 0.05) {
-                        game.tryMove(board, piece, 0, 1);
+                        if (game.checkPlace(board, piece)) {
+                            board.placeTetromino(piece);
+                            piece = new Tetromino(TetrominoType.J);
+                        }
                         downAcc = 0;
                     }
                 }

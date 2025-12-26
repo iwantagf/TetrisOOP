@@ -1,5 +1,6 @@
 package main.java.tetris.game;
 
+import java.util.Random;
 
 public class Game {
     public boolean tryMove(Board board, Tetromino p, int dx, int dy) {
@@ -24,5 +25,12 @@ public class Game {
 
         p.setShape(before);
         return false;
+    }
+
+    public boolean checkPlace(Board board, Tetromino p) {
+        if (tryMove(board, p, 0, 1))
+            return false;
+
+        return true;
     }
 }
