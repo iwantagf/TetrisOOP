@@ -28,12 +28,19 @@ public class Game {
     }
 
     public void dropTetromino(Board board, Tetromino p) {
-        int y = 0;
-        while (y < Board.H && board.canPlace(p.getX(), p.getY() + y, p.getShape()))
-            ++y;
-        --y;
+        int lo = 0, hi = Board.H;
 
-        tryMove(board, p, 0, y);
+        while (hi - lo > 1) {
+            int m = (lo + hi)/2;
+
+            if (board.canPlace(p.getX(), p.getY() + m, p.getShape())) {
+                lo = m;
+            }
+            else
+                hi = m;
+        }
+
+        tryMove(board, p, 0, lo);
         return;
     }
 
