@@ -90,7 +90,7 @@ public class GameRenderer {
 
         g.setStroke(Color.WHITE);
         g.setLineWidth(4);
-        g.strokeRect(0, 0, Board.SQUARE_W, Board.SQUARE_H);
+        g.strokeRect(-4, -4, Board.SQUARE_W + 6, Board.SQUARE_H + 6);
         g.restore();
     }
 

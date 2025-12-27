@@ -106,6 +106,8 @@ public class Main extends Application {
 
                 if (input.useDrop()) {
                     game.dropTetromino(board, piece);
+                    board.placeTetromino(piece);
+                    piece = game.spawnTetromino();
                 }
 
                 double canvasW = canvas.getWidth();
