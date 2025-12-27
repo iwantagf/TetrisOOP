@@ -104,6 +104,7 @@ public class Main extends Application {
                     game.dropTetromino(board, piece);
                 }
 
+                game.clearFilledRows(board);
                 board.drawBoard(g);
                 piece.draw(g);
 

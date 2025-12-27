@@ -10,8 +10,8 @@ public class Board {
     public static final int SQUARE_W = W * TILE;
     public static final int SQUARE_H = H * TILE;
 
-    private int[][] grid = new int[H][W];
-    private Color[][] cellColor = new Color[H][W];
+    protected int[][] grid = new int[H][W];
+    protected Color[][] cellColor = new Color[H][W];
 
     public Board() {
         for (int y = 0; y < H; y++)
@@ -78,5 +78,12 @@ public class Board {
                 cellColor[py + r][px + c] = p.getColor();
                 grid[py + r][px + c] = 1;
             }
+    }
+
+    public void clearRow(int row) {
+        for (int i = row; i >= 2; i--) {
+            System.arraycopy(grid[i - 1], 0, grid[i], 0, grid[i - 1].length);
+            System.arraycopy(cellColor[i - 1], 0, cellColor[i], 0, cellColor[i - 1].length);
+        }
     }
 }

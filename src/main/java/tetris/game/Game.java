@@ -49,4 +49,20 @@ public class Game {
 
         return new Tetromino(values[new Random().nextInt(values.length)]);
     }
+
+
+    public void clearFilledRows(Board board) {
+        for (int y = Board.H - 1; y >= 2; y--) {
+            boolean filled = true;
+
+            for (int x = 0; x < Board.W; ++x)
+                if (board.grid[y][x] == 0) {
+                    filled = false;
+                    break;
+                }
+
+            if (filled)
+                board.clearRow(y);
+        }
+    }
 }
