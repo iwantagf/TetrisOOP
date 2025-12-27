@@ -12,5 +12,6 @@ public class GamePane extends StackPane {
     public GamePane(Canvas canvas) {
         this.root = new Group(canvas);
         getChildren().add(root);
+        setStyle("-fx-background-color: black;");
     }
 }

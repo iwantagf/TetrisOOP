@@ -10,6 +10,7 @@ import javafx.animation.AnimationTimer;
 import main.java.tetris.game.Board;
 import main.java.tetris.game.Tetromino;
 import main.java.tetris.game.TetrominoType;
+import main.java.tetris.render.GameRenderer;
 import main.java.tetris.ui.GamePane;
 import main.java.tetris.input.InputHandler;
 import main.java.tetris.game.Game;
@@ -18,19 +19,22 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Tetris");
-        Canvas canvas = new Canvas(Board.SQUARE_W, Board.SQUARE_H);
+        Canvas canvas = new Canvas(1280, 720);
         GraphicsContext g = canvas.getGraphicsContext2D();
-        Board board = new Board();
-        Game game = new Game();
         GamePane gamePane = new GamePane(canvas);
         Scene scene = new Scene(gamePane, 1280, 720);
+
+        canvas.widthProperty().bind(gamePane.widthProperty());
+        canvas.heightProperty().bind(gamePane.heightProperty());
+
         InputHandler input = new InputHandler(scene);
+        GameRenderer renderer = new GameRenderer(g);
+        Board board = new Board();
+        Game game = new Game();
 
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
-
-
 
 
         AnimationTimer timer = new AnimationTimer() {
@@ -104,11 +108,15 @@ public class Main extends Application {
                     game.dropTetromino(board, piece);
                 }
 
+                double canvasW = canvas.getWidth();
+                double canvasH = canvas.getHeight();
+
                 game.clearFilledRows(board);
-                board.drawBoard(g);
-                piece.draw(g);
+                renderer.render(board, piece, canvasW, canvasH);
+
 
                 if (!board.canPlace(piece.getX(), piece.getY(), piece.getShape())) {
+                    renderer.renderGameOver(board, piece, canvasW, canvasH);
                     this.stop();
                 }
             }

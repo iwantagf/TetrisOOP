@@ -2,7 +2,7 @@ package main.java.tetris.game;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
+import main.java.tetris.render.ColorPalette;
 
 public class Tetromino {
     private int x;
@@ -12,7 +12,7 @@ public class Tetromino {
 
     public Tetromino(TetrominoType type) {
         this.shape = type.shape;
-        this.color = type.color;
+        this.color = ColorPalette.get(type);
 
         this.x = (Board.W - shape[0].length) / 2;
         this.y = 0;

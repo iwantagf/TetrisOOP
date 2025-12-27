@@ -22,15 +22,19 @@ public class Board {
     }
 
     public void drawBoard(GraphicsContext g) {
-        g.setFill(Color.BLACK);
+        g.setFill(Color.TRANSPARENT);
         g.fillRect(0, 0, SQUARE_W, SQUARE_H);
+
+        g.setStroke(Color.rgb(120, 120, 120));
+        g.setLineWidth(3);
+        g.strokeLine(0, 2 * TILE, SQUARE_W, 2 * TILE);
+
 
         for (int y = 2; y < H; y++)
             for (int x = 0; x < W; x++) {
                 if (this.grid[y][x] == 0) {
                     drawGrid(g, x, y);
-                }
-                else
+                } else
                     drawCell(g, x, y, cellColor[y][x]);
             }
     }
@@ -38,7 +42,7 @@ public class Board {
     private void drawCell(GraphicsContext g, int x, int y, Color c) {
         g.setFill(c);
         g.fillRect(x * TILE, y * TILE, TILE, TILE);
-        g.setStroke(Color.BLACK);
+        g.setStroke(Color.rgb(40, 40, 40));
         g.strokeRect(x * TILE, y * TILE, TILE, TILE);
     }
 
