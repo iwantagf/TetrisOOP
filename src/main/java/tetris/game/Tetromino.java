@@ -90,5 +90,4 @@ public class Tetromino {
     public void setShape(int[][] shape) {
         this.shape = copy(shape);
     }
-
 }

@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public class Board {
     public static final int W = 10;
-    public static final int H = 20;
+    public static final int H = 22;
     public static final int TILE = 30;
 
     public static final int SQUARE_W = W * TILE;
@@ -25,7 +25,7 @@ public class Board {
         g.setFill(Color.BLACK);
         g.fillRect(0, 0, SQUARE_W, SQUARE_H);
 
-        for (int y = 0; y < H; y++)
+        for (int y = 2; y < H; y++)
             for (int x = 0; x < W; x++) {
                 if (this.grid[y][x] == 0) {
                     drawGrid(g, x, y);

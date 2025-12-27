@@ -27,6 +27,16 @@ public class Game {
         return false;
     }
 
+    public void dropTetromino(Board board, Tetromino p) {
+        int y = 0;
+        while (y < Board.H && board.canPlace(p.getX(), p.getY() + y, p.getShape()))
+            ++y;
+        --y;
+
+        tryMove(board, p, 0, y);
+        return;
+    }
+
     public boolean checkPlace(Board board, Tetromino p) {
         if (tryMove(board, p, 0, 1))
             return false;

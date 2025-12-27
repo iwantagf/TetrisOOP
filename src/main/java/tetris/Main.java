@@ -37,7 +37,6 @@ public class Main extends Application {
             Tetromino piece = game.spawnTetromino();
             long last = 0;
             double acc = 0;
-
             double downAcc = 0;
             double leftAcc = 0;
             double rightAcc = 0;
@@ -101,8 +100,16 @@ public class Main extends Application {
                     game.tryRotate(board, piece);
                 }
 
+                if (input.useDrop()) {
+                    game.dropTetromino(board, piece);
+                }
+
                 board.drawBoard(g);
                 piece.draw(g);
+
+                if (!board.canPlace(piece.getX(), piece.getY(), piece.getShape())) {
+                    this.stop();
+                }
             }
         };
 
