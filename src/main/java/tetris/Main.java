@@ -165,14 +165,13 @@ public class Main extends Application {
                 if (!board.canPlace(piece.getX(), piece.getY(), piece.getShape())) {
                     gamePane.showGameOver(true);
                     gameOver = true;
-                    return;
                 }
             }
         };
 
         timer.start();
     }
-    public static void main(String[] args) {
+    static void main(String[] args) {
         launch(args);
     }
 }
