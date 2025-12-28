@@ -6,13 +6,11 @@ public class MathUtil {
     private int score;
     private int lines;
     private int level;
-    private int lineCurrent;
 
     public MathUtil() {
         this.score = 0;
         this.lines = 0;
         this.level = 1;
-        lineCurrent = 0;
     }
 
     public int getLevel() {
@@ -45,15 +43,11 @@ public class MathUtil {
 
     public void updateLines(SidePanelLeft panel, int lines) {
         this.lines += lines;
-        lineCurrent += lines;
         panel.setLines(this.lines);
     }
 
     public void updateLevel(SidePanelLeft panel) {
-        if (lineCurrent > 20) {
-            this.level++;
-        }
-        lineCurrent %= 20;
+        this.level = this.lines / 20 + 1;
         panel.setLevel(this.level);
     }
 
