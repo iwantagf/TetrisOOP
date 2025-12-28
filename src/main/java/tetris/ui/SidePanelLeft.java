@@ -18,6 +18,9 @@ public class SidePanelLeft extends VBox {
     private final Label linesValue = new Label("0");
     private final Label levelLabel = new Label("LEVEL");
     private final Label levelValue = new Label("1");
+    private final Label holdLabel = new Label("HOLD");
+    private Canvas holdCanvas;
+    private GraphicsContext holdGC;
 
     private Font titleFont;
     private Font valueFont;
@@ -36,6 +39,10 @@ public class SidePanelLeft extends VBox {
         setPrefWidth(260);
         setStyle("-fx-background-color: black;");
 
+        holdCanvas = new Canvas(previewSize, previewSize);
+        holdGC = holdCanvas.getGraphicsContext2D();
+
+        getChildren().addAll(holdLabel, holdCanvas);
         loadFonts();
         build();
     }
@@ -65,6 +72,8 @@ public class SidePanelLeft extends VBox {
         styleTitle(levelLabel);
         styleValue(levelValue);
 
+        styleTitle(holdLabel);
+
         getChildren().addAll(
                 scoreLabel, scoreValue,
                 spacer(),
@@ -87,7 +96,57 @@ public class SidePanelLeft extends VBox {
         levelValue.setText(String.valueOf(level));
     }
 
+    private void clearPreview(GraphicsContext g) {
+        g.clearRect(0, 0, g.getCanvas().getWidth(), g.getCanvas().getHeight());
+    }
 
+    private void drawPreview(GraphicsContext g, TetrominoType p) {
+        clearPreview(g);
+
+        int[][] s = p.shape;
+        Color color = ColorPalette.get(p);
+
+        int minR = 99, maxR = -1, minC = 99, maxC = -1;
+
+        for (int r = 0; r < s.length; ++r)
+            for (int c = 0; c < s[0].length; ++c)
+                if (s[r][c] != 0) {
+                    minR = Math.min(minR, r);
+                    maxR = Math.max(maxR, r);
+                    minC = Math.min(minC, c);
+                    maxC = Math.max(maxC, c);
+                }
+
+        int h = maxR - minR + 1;
+        int w = maxC - minC + 1;
+
+        double ox = (g.getCanvas().getWidth() - w * previewTile) / 2.0;
+        double oy = (g.getCanvas().getHeight() - h * previewTile) / 2.0;
+
+        Color fill = new Color(color.getRed(), color.getGreen(), color.getBlue(), 0.95);
+
+        for (int r = 0; r < s.length; ++r)
+            for (int c = 0; c < s[0].length; ++c)
+                if (s[r][c] != 0) {
+                    double x = ox + (c - minC) * previewTile;
+                    double y = oy + (r - minR) * previewTile;
+
+                    g.setFill(fill);
+                    g.fillRect(x, y, previewTile, previewTile);
+
+                    g.setStroke(Color.BLACK);
+                    g.strokeRect(x, y, previewTile, previewTile);
+                }
+    }
+
+    public void updateHold(TetrominoType p) {
+        holdGC.clearRect(0, 0, holdCanvas.getWidth(), holdCanvas.getHeight());
+
+        if (p == null)
+            return;
+
+        drawPreview(holdGC, p);
+    }
 
     private Label spacer() {
         Label sp = new Label("");

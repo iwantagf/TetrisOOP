@@ -11,6 +11,9 @@ public class Game {
     private final Deque<TetrominoType> queue = new ArrayDeque<>();
     private final Random rng = new Random();
 
+    private TetrominoType holdType = null;
+    private boolean usedHold = false;
+
     public boolean tryMove(Board board, Tetromino p, int dx, int dy) {
         int mx = p.getX() + dx;
         int my = p.getY() + dy;
@@ -106,5 +109,34 @@ public class Game {
             }
         }
         return res;
+    }
+
+    public Tetromino hold(Tetromino current) {
+        if (usedHold)
+            return current;
+
+        TetrominoType curType = current.getType();
+
+        Tetromino next;
+
+        if (holdType == null) {
+            holdType = curType;
+            next = spawnTetromino();
+        }
+        else {
+            next = new Tetromino(holdType);
+            holdType = curType;
+        }
+
+        usedHold = true;
+        return next;
+    }
+
+    public void onPieceLocked() {
+        usedHold = false;
+    }
+
+    public TetrominoType getHoldType() {
+        return holdType;
     }
 }

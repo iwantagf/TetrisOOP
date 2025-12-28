@@ -31,7 +31,6 @@ public class MathUtil {
         if (lines == 0)
             return;
 
-        System.out.println(lines);
         if (lines == 1)
             this.score += 1;
         else if (lines == 2)

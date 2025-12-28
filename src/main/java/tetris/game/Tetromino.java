@@ -9,8 +9,10 @@ public class Tetromino {
     private int y;
     private int[][] shape;
     private final Color color;
+    private TetrominoType type;
 
     public Tetromino(TetrominoType type) {
+        this.type = type;
         this.shape = type.shape;
         this.color = ColorPalette.get(type);
 
@@ -38,6 +40,8 @@ public class Tetromino {
     public int getY() {
         return y;
     }
+
+    public TetrominoType getType() { return type; }
 
     public Color getColor() {
         return color;

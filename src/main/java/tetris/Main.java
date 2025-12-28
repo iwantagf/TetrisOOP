@@ -59,12 +59,18 @@ public class Main extends Application {
                 double dt = (now - last) / 1000000000.0;
                 last = now;
 
+                if (input.useHold()) {
+                    piece = game.hold(piece);
+                    left.updateHold(game.getHoldType());
+                }
+
                 acc += dt;
 
                 double gravityX = MathUtil.gravityThreshold(meth.getLevel(), 0.5, 0.92, 0.05);
                 if (acc >= gravityX) {
                     if (game.checkPlace(board, piece)) {
                         board.placeTetromino(piece);
+                        game.onPieceLocked();
                         piece = game.spawnTetromino();
                     }
                     acc = 0;
@@ -112,6 +118,7 @@ public class Main extends Application {
 
                 if (input.useDrop()) {
                     game.dropTetromino(board, piece);
+                    game.onPieceLocked();
                     board.placeTetromino(piece);
                     piece = game.spawnTetromino();
                 }
