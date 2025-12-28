@@ -106,6 +106,7 @@ public class Game {
             if (filled) {
                 board.clearRow(y);
                 res += 1;
+                ++y;
             }
         }
         return res;

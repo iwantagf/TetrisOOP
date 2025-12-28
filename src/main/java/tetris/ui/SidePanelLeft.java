@@ -123,9 +123,8 @@ public class SidePanelLeft extends VBox {
 
     public void setLevel(int level) {
         levelValue.setText(String.valueOf(level));
-        String path = "/images/" + level + ".png";
+        String path = "/images/" + Math.min(level, 12) + ".png";
         InputStream is = getClass().getResourceAsStream(path);
-
         logo.setImage(new Image(is));
     }
 
