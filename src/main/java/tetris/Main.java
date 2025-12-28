@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
 
@@ -13,6 +14,7 @@ import main.java.tetris.render.GameRenderer;
 import main.java.tetris.ui.GamePane;
 import main.java.tetris.input.InputHandler;
 import main.java.tetris.game.Game;
+import main.java.tetris.ui.MainMenu;
 import main.java.tetris.ui.SidePanelLeft;
 import main.java.tetris.ui.SidePanelRight;
 import main.java.tetris.util.MathUtil;
@@ -24,7 +26,9 @@ public class Main extends Application {
         Canvas canvas = new Canvas(Board.SQUARE_W + 12, Board.SQUARE_H + 12);
         GraphicsContext g = canvas.getGraphicsContext2D();
         GamePane gamePane = new GamePane(canvas);
-        Scene scene = new Scene(gamePane, 1280, 720);
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 1280, 720);
+        MainMenu menu = new MainMenu();
 
         InputHandler input = new InputHandler(scene);
         GameRenderer renderer = new GameRenderer(g);
@@ -35,6 +39,10 @@ public class Main extends Application {
         gamePane.setRight(right);
         gamePane.setLeft(left);
 
+
+        root.getChildren().add(menu);
+
+        stage.setTitle("TETR.io Clone tat nhien roi!");
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
@@ -169,7 +177,17 @@ public class Main extends Application {
             }
         };
 
-        timer.start();
+
+
+        menu.getStartButton().setOnAction(e -> {
+            root.getChildren().clear();
+            root.getChildren().add(gamePane);
+            timer.start();
+        });
+
+        menu.getExitButton().setOnAction(e -> {
+            stage.close();
+        });
     }
     static void main(String[] args) {
         launch(args);
