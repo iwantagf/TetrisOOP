@@ -1,6 +1,10 @@
 package main.java.tetris.ui;
 
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
@@ -10,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import main.java.tetris.game.TetrominoType;
 import main.java.tetris.render.ColorPalette;
+import java.io.InputStream;
 
 public class SidePanelLeft extends VBox {
     private final Label scoreLabel = new Label("SCORE");
@@ -21,6 +26,7 @@ public class SidePanelLeft extends VBox {
     private final Label holdLabel = new Label("HOLD");
     private Canvas holdCanvas;
     private GraphicsContext holdGC;
+    private ImageView logo;
 
     private Font titleFont;
     private Font valueFont;
@@ -29,6 +35,21 @@ public class SidePanelLeft extends VBox {
 
     @SuppressWarnings("FieldCanBeLocal")
     private final int previewSize = previewTile * 6;
+
+
+    private ImageView loadLogo(String path) {
+        InputStream is = getClass().getResourceAsStream(path);
+        ImageView iv = new ImageView(new Image(is));
+
+        iv.setPreserveRatio(true);
+
+        iv.fitWidthProperty().bind(widthProperty().subtract(40));
+
+        iv.setSmooth(true);
+        iv.setCache(true);
+
+        return iv;
+    }
 
 
     public SidePanelLeft() {
@@ -41,6 +62,10 @@ public class SidePanelLeft extends VBox {
 
         holdCanvas = new Canvas(previewSize, previewSize);
         holdGC = holdCanvas.getGraphicsContext2D();
+
+        String path = "/images/" + levelValue.getText() + ".png";
+        logo = loadLogo(path);
+
 
         getChildren().addAll(holdLabel, holdCanvas);
         loadFonts();
@@ -74,13 +99,17 @@ public class SidePanelLeft extends VBox {
 
         styleTitle(holdLabel);
 
+        Region S = new Region();
+        VBox.setVgrow(S, Priority.ALWAYS);
+
         getChildren().addAll(
                 scoreLabel, scoreValue,
                 spacer(),
                 linesLabel, linesValue,
                 spacer(),
                 levelLabel, levelValue,
-                spacer()
+                S,
+                logo
         );
     }
 
@@ -94,7 +123,12 @@ public class SidePanelLeft extends VBox {
 
     public void setLevel(int level) {
         levelValue.setText(String.valueOf(level));
+        String path = "/images/" + level + ".png";
+        InputStream is = getClass().getResourceAsStream(path);
+
+        logo.setImage(new Image(is));
     }
+
 
     private void clearPreview(GraphicsContext g) {
         g.clearRect(0, 0, g.getCanvas().getWidth(), g.getCanvas().getHeight());
