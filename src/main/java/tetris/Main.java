@@ -93,7 +93,7 @@ public class Main extends Application {
 
                 acc += dt;
 
-                double gravityX = MathUtil.gravityThreshold(meth.getLevel(), 0.5, 0.92, 0.05);
+                double gravityX = MathUtil.gravityThreshold(meth.getLevel(), 0.5, 0.5, 0.01);
                 if (acc >= gravityX) {
                     if (game.checkPlace(board, piece)) {
                         board.placeTetromino(piece);
