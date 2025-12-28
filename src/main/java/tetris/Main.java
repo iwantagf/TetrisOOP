@@ -13,6 +13,7 @@ import main.java.tetris.render.GameRenderer;
 import main.java.tetris.ui.GamePane;
 import main.java.tetris.input.InputHandler;
 import main.java.tetris.game.Game;
+import main.java.tetris.ui.SidePanelLeft;
 import main.java.tetris.ui.SidePanelRight;
 
 public class Main extends Application {
@@ -29,8 +30,10 @@ public class Main extends Application {
         Board board = new Board();
         Game game = new Game();
         SidePanelRight right = new SidePanelRight();
+        SidePanelLeft left = new SidePanelLeft();
 
         gamePane.setRight(right);
+        gamePane.setLeft(left);
 
         stage.setScene(scene);
         stage.setResizable(true);
