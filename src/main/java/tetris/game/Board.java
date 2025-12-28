@@ -25,9 +25,6 @@ public class Board {
         g.setFill(Color.TRANSPARENT);
         g.fillRect(0, 0, SQUARE_W, SQUARE_H);
 
-        g.setStroke(Color.rgb(120, 120, 120));
-        g.setLineWidth(3);
-        g.strokeLine(0, 2 * TILE, SQUARE_W, 2 * TILE);
 
 
         for (int y = 2; y < H; y++)
@@ -37,6 +34,12 @@ public class Board {
                 } else
                     drawCell(g, x, y, cellColor[y][x]);
             }
+
+        g.save();
+        g.setStroke(Color.WHITE);
+        g.setLineWidth(3);
+        g.strokeLine(0, 2 * TILE, SQUARE_W, 2 * TILE);
+        g.restore();
     }
 
     private void drawCell(GraphicsContext g, int x, int y, Color c) {

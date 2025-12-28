@@ -1,8 +1,16 @@
 package main.java.tetris.game;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
 import java.util.Random;
 
 public class Game {
+    private final Deque<TetrominoType> queue = new ArrayDeque<>();
+    private final Random rng = new Random();
+
     public boolean tryMove(Board board, Tetromino p, int dx, int dy) {
         int mx = p.getX() + dx;
         int my = p.getY() + dy;
@@ -15,16 +23,15 @@ public class Game {
         return false;
     }
 
-    public boolean tryRotate(Board board, Tetromino p) {
+    public void tryRotate(Board board, Tetromino p) {
         int[][] before = Tetromino.copy(p.getShape());
         p.rotate();
 
         if (board.canPlace(p.getX(), p.getY(), p.getShape())) {
-            return true;
+            return;
         }
 
         p.setShape(before);
-        return false;
     }
 
     public void dropTetromino(Board board, Tetromino p) {
@@ -41,20 +48,44 @@ public class Game {
         }
 
         tryMove(board, p, 0, lo);
-        return;
     }
 
     public boolean checkPlace(Board board, Tetromino p) {
-        if (tryMove(board, p, 0, 1))
-            return false;
-
-        return true;
+        return !tryMove(board, p, 0, 1);
     }
 
-    public Tetromino spawnTetromino() {
-        TetrominoType[] values = TetrominoType.values();
+    private void refillBag() {
+        List<TetrominoType> bag = new ArrayList<>();
+        Collections.addAll(bag, TetrominoType.values());
+        Collections.shuffle(bag, rng);
+        queue.addAll(bag);
+    }
 
-        return new Tetromino(values[new Random().nextInt(values.length)]);
+    private void ensureQueue(int need) {
+        while (queue.size() < need) {
+            refillBag();
+        }
+    }
+    public Tetromino spawnTetromino() {
+        ensureQueue(8);
+        TetrominoType t = queue.removeFirst();
+        return new Tetromino(t);
+    }
+
+    public TetrominoType[] nextFive() {
+        ensureQueue(5);
+
+        TetrominoType[] res = new TetrominoType[5];
+
+        int i = 0;
+
+        for (TetrominoType t : queue) {
+            res[i++] = t;
+            if (i == 5)
+                break;
+        }
+
+        return res;
     }
 
 

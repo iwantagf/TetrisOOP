@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import main.java.tetris.game.Tetromino;
 import main.java.tetris.game.Board;
 
@@ -50,7 +49,7 @@ public class GameRenderer {
         int y = p.getY() + d;
 
         Color base = p.getColor();
-        Color ghost = new Color(base.getRed(), base.getGreen(), base.getBlue(), 0.5);
+        Color ghost = new Color(base.getRed(), base.getGreen(), base.getBlue(), 0.3);
 
         for (int r = 0; r < shape.length; ++r) {
             for (int c = 0; c < shape[0].length; ++c) {
@@ -108,15 +107,25 @@ public class GameRenderer {
         g.setFont(font);
         g.setFill(Color.WHITE);
 
-        String text = "GAME OVER!!";
+        String[] lines = {
+                "GAME OVER!",
+                "Press R to Restart"
+        };
 
-        Text temp = new Text(text);
+        Text temp = new Text();
         temp.setFont(font);
-        double textWidth = temp.getLayoutBounds().getWidth();
 
-        double x = (canvasW - textWidth) / 2.0;
-        double y = canvasH / 2.0;
+        double lineHeight = 42;
+        double blockH = lines.length * lineHeight;
 
-        g.fillText(text, x, y);
+        double startY = (canvasH - blockH) / 2.0 + 30;
+        double startX;
+
+
+        for (int i = 0; i < lines.length; ++i) {
+            temp.setText(lines[i]);
+            startX = (canvasW - temp.getLayoutBounds().getWidth()) / 2.0;
+            g.fillText(lines[i], startX, startY + i * lineHeight);
+        }
     }
 }

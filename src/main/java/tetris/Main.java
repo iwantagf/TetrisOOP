@@ -9,7 +9,6 @@ import javafx.animation.AnimationTimer;
 
 import main.java.tetris.game.Board;
 import main.java.tetris.game.Tetromino;
-import main.java.tetris.game.TetrominoType;
 import main.java.tetris.render.GameRenderer;
 import main.java.tetris.ui.GamePane;
 import main.java.tetris.input.InputHandler;

@@ -1,7 +1,6 @@
 package main.java.tetris.input;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import main.java.tetris.game.Tetromino;
 
 public class InputHandler {
     boolean left, right, down, rotate, drop;
