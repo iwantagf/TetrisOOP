@@ -28,11 +28,9 @@ public class Main extends Application {
 
         InputHandler input = new InputHandler(scene);
         GameRenderer renderer = new GameRenderer(g);
-        Board board = new Board();
-        Game game = new Game();
         SidePanelRight right = new SidePanelRight();
         SidePanelLeft left = new SidePanelLeft();
-        MathUtil meth = new MathUtil();
+
 
         gamePane.setRight(right);
         gamePane.setLeft(left);
@@ -42,16 +40,45 @@ public class Main extends Application {
         stage.show();
 
 
+
+
         AnimationTimer timer = new AnimationTimer() {
+            Board board = new Board();
+            Game game = new Game();
             Tetromino piece = game.spawnTetromino();
+            MathUtil meth = new MathUtil();
             long last = 0;
             double acc = 0;
             double downAcc = 0;
             double leftAcc = 0;
             double rightAcc = 0;
+            boolean gameOver = false;
+
+            void reset() {
+                board = new Board();
+                game = new Game();
+                piece = game.spawnTetromino();
+                meth = new MathUtil();
+                left.setScore(0);
+                left.setLevel(1);
+                left.setLines(0);
+
+                gameOver = false;
+                last = 0;
+                acc = downAcc = leftAcc = rightAcc = 0;
+
+                gamePane.showGameOver(false);
+            }
 
             @Override
             public void handle(long now) {
+                if (gameOver) {
+                    if (input.useRestart()) {
+                        reset();
+                    }
+                    return;
+                }
+
                 if (last == 0) {
                     last = now;
                     return;
@@ -137,7 +164,8 @@ public class Main extends Application {
 
                 if (!board.canPlace(piece.getX(), piece.getY(), piece.getShape())) {
                     gamePane.showGameOver(true);
-                    this.stop();
+                    gameOver = true;
+                    return;
                 }
             }
         };

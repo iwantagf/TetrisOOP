@@ -3,7 +3,13 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
 public class InputHandler {
-    boolean left, right, down, rotate, drop, hold;
+    private boolean left;
+    private boolean right;
+    private boolean down;
+    private boolean rotate;
+    private boolean drop;
+    private boolean hold;
+    private boolean restartPressed = false;
 
     public InputHandler(Scene scene) {
         scene.setOnKeyPressed(e -> {
@@ -13,6 +19,7 @@ public class InputHandler {
             if (e.getCode() == KeyCode.UP) rotate = true;
             if (e.getCode() == KeyCode.SPACE) drop = true;
             if (e.getCode() == KeyCode.SHIFT) hold = true;
+            if (e.getCode() == KeyCode.R) restartPressed = true;
         });
 
         scene.setOnKeyReleased(e -> {
@@ -21,7 +28,7 @@ public class InputHandler {
             if (e.getCode() == KeyCode.DOWN) down = false;
             if (e.getCode() == KeyCode.UP) rotate = false;
             if (e.getCode() == KeyCode.SPACE) drop = false;
-            if (e.getCode() == KeyCode.SHIFT) hold = true;
+            if (e.getCode() == KeyCode.SHIFT) hold = false;
         });
     }
 
@@ -51,6 +58,15 @@ public class InputHandler {
             rotate = false;
             return true;
         }
+        return false;
+    }
+
+    public boolean useRestart() {
+        if (restartPressed) {
+            restartPressed = false;
+            return true;
+        }
+
         return false;
     }
 

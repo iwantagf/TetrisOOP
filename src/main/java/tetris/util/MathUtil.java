@@ -9,9 +9,9 @@ public class MathUtil {
     private int lineCurrent;
 
     public MathUtil() {
-        score = 0;
-        lines = 0;
-        level = 1;
+        this.score = 0;
+        this.lines = 0;
+        this.level = 1;
         lineCurrent = 0;
     }
 
