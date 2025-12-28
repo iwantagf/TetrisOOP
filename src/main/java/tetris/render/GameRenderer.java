@@ -2,8 +2,6 @@ package main.java.tetris.render;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
 import main.java.tetris.game.Tetromino;
 import main.java.tetris.game.Board;
 
@@ -91,41 +89,5 @@ public class GameRenderer {
         g.setLineWidth(4);
         g.strokeRect(-4, -4, Board.SQUARE_W + 6, Board.SQUARE_H + 6);
         g.restore();
-    }
-
-    public void renderGameOver(Board board, Tetromino piece, double canvasW, double canvasH) {
-        render(board, piece, canvasW, canvasH);
-
-        g.setFill(Color.rgb(0, 0, 0, 0.65));
-        g.fillRect(0, 0, canvasW, canvasH);
-
-        Font font = Font.loadFont(
-                getClass().getResourceAsStream("/PressStart2P.ttf"),
-                36
-        );
-
-        g.setFont(font);
-        g.setFill(Color.WHITE);
-
-        String[] lines = {
-                "GAME OVER!",
-                "Press R to Restart"
-        };
-
-        Text temp = new Text();
-        temp.setFont(font);
-
-        double lineHeight = 42;
-        double blockH = lines.length * lineHeight;
-
-        double startY = (canvasH - blockH) / 2.0 + 30;
-        double startX;
-
-
-        for (int i = 0; i < lines.length; ++i) {
-            temp.setText(lines[i]);
-            startX = (canvasW - temp.getLayoutBounds().getWidth()) / 2.0;
-            g.fillText(lines[i], startX, startY + i * lineHeight);
-        }
     }
 }

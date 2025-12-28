@@ -13,23 +13,24 @@ import main.java.tetris.render.GameRenderer;
 import main.java.tetris.ui.GamePane;
 import main.java.tetris.input.InputHandler;
 import main.java.tetris.game.Game;
+import main.java.tetris.ui.SidePanelRight;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Tetris");
-        Canvas canvas = new Canvas(1280, 720);
+        Canvas canvas = new Canvas(Board.SQUARE_W + 12, Board.SQUARE_H + 12);
         GraphicsContext g = canvas.getGraphicsContext2D();
         GamePane gamePane = new GamePane(canvas);
         Scene scene = new Scene(gamePane, 1280, 720);
-
-        canvas.widthProperty().bind(gamePane.widthProperty());
-        canvas.heightProperty().bind(gamePane.heightProperty());
 
         InputHandler input = new InputHandler(scene);
         GameRenderer renderer = new GameRenderer(g);
         Board board = new Board();
         Game game = new Game();
+        SidePanelRight right = new SidePanelRight();
+
+        gamePane.setRight(right);
 
         stage.setScene(scene);
         stage.setResizable(true);
@@ -112,12 +113,13 @@ public class Main extends Application {
                 double canvasW = canvas.getWidth();
                 double canvasH = canvas.getHeight();
 
+
                 game.clearFilledRows(board);
                 renderer.render(board, piece, canvasW, canvasH);
-
+                right.updateNext(game.nextFive());
 
                 if (!board.canPlace(piece.getX(), piece.getY(), piece.getShape())) {
-                    renderer.renderGameOver(board, piece, canvasW, canvasH);
+                    gamePane.showGameOver(true);
                     this.stop();
                 }
             }
