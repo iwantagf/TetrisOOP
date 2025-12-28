@@ -15,6 +15,7 @@ import main.java.tetris.input.InputHandler;
 import main.java.tetris.game.Game;
 import main.java.tetris.ui.SidePanelLeft;
 import main.java.tetris.ui.SidePanelRight;
+import main.java.tetris.util.MathUtil;
 
 public class Main extends Application {
     @Override
@@ -31,6 +32,7 @@ public class Main extends Application {
         Game game = new Game();
         SidePanelRight right = new SidePanelRight();
         SidePanelLeft left = new SidePanelLeft();
+        MathUtil meth = new MathUtil();
 
         gamePane.setRight(right);
         gamePane.setLeft(left);
@@ -59,7 +61,8 @@ public class Main extends Application {
 
                 acc += dt;
 
-                if (acc >= 0.5) {
+                double gravityX = MathUtil.gravityThreshold(meth.getLevel(), 0.5, 0.92, 0.05);
+                if (acc >= gravityX) {
                     if (game.checkPlace(board, piece)) {
                         board.placeTetromino(piece);
                         piece = game.spawnTetromino();
@@ -117,9 +120,13 @@ public class Main extends Application {
                 double canvasH = canvas.getHeight();
 
 
-                game.clearFilledRows(board);
-                renderer.render(board, piece, canvasW, canvasH);
+                int lines = game.clearFilledRows(board);
                 right.updateNext(game.nextFive());
+                meth.updateLevel(left);
+                meth.updateLines(left, lines);
+                meth.updateScore(left, lines);
+                renderer.render(board, piece, canvasW, canvasH);
+
 
                 if (!board.canPlace(piece.getX(), piece.getY(), piece.getShape())) {
                     gamePane.showGameOver(true);

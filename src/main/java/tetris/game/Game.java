@@ -89,7 +89,8 @@ public class Game {
     }
 
 
-    public void clearFilledRows(Board board) {
+    public int clearFilledRows(Board board) {
+        int res = 0;
         for (int y = Board.H - 1; y >= 2; y--) {
             boolean filled = true;
 
@@ -99,8 +100,11 @@ public class Game {
                     break;
                 }
 
-            if (filled)
+            if (filled) {
                 board.clearRow(y);
+                res += 1;
+            }
         }
+        return res;
     }
 }
