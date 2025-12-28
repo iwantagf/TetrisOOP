@@ -2,7 +2,6 @@ package main.java.tetris.ui;
 
 
 import javafx.geometry.Pos;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -19,6 +18,7 @@ public class MainMenu extends StackPane {
 
     private final Button startButton = new Button("START");
     private final Button exitButton = new Button("EXIT");
+    private final Button continueButton = new Button("CONTINUE");
     private final ImageView backGround;
     public MainMenu() {
         //BackGround Image
@@ -32,7 +32,7 @@ public class MainMenu extends StackPane {
 
         //Overlay
         Region dim = new Region();
-        dim.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
+        dim.setStyle("-fx-background-color: rgb(0, 0, 0, 0.5)");
         dim.prefWidthProperty().bind(widthProperty());
         dim.prefHeightProperty().bind(heightProperty());
 
@@ -58,8 +58,9 @@ public class MainMenu extends StackPane {
 
         styleButton(startButton, buttonFont);
         styleButton(exitButton, buttonFont);
+        styleButton(continueButton, buttonFont);
 
-        content.getChildren().addAll(title, startButton, exitButton);
+        content.getChildren().addAll(title, continueButton, startButton, exitButton);
 
         getChildren().addAll(backGround, dim, content);
     }
@@ -103,5 +104,9 @@ public class MainMenu extends StackPane {
 
     public Button getExitButton() {
         return exitButton;
+    }
+
+    public Button getContinueButton() {
+        return continueButton;
     }
 }

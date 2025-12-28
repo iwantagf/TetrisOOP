@@ -10,6 +10,7 @@ public class InputHandler {
     private boolean drop;
     private boolean hold;
     private boolean restartPressed = false;
+    private boolean backToMenu = false;
 
     public InputHandler(Scene scene) {
         scene.setOnKeyPressed(e -> {
@@ -20,15 +21,13 @@ public class InputHandler {
             if (e.getCode() == KeyCode.SPACE) drop = true;
             if (e.getCode() == KeyCode.SHIFT) hold = true;
             if (e.getCode() == KeyCode.R) restartPressed = true;
+            if (e.getCode() == KeyCode.BACK_SPACE) backToMenu = true;
         });
 
         scene.setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.LEFT) left = false;
             if (e.getCode() == KeyCode.RIGHT) right = false;
             if (e.getCode() == KeyCode.DOWN) down = false;
-            if (e.getCode() == KeyCode.UP) rotate = false;
-            if (e.getCode() == KeyCode.SPACE) drop = false;
-            if (e.getCode() == KeyCode.SHIFT) hold = false;
         });
     }
 
@@ -75,6 +74,15 @@ public class InputHandler {
             hold = false;
             return true;
         }
+        return false;
+    }
+
+    public boolean useBack() {
+        if (backToMenu) {
+            backToMenu = false;
+            return true;
+        }
+
         return false;
     }
 }

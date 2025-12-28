@@ -9,7 +9,7 @@ public class Tetromino {
     private int y;
     private int[][] shape;
     private final Color color;
-    private TetrominoType type;
+    private final TetrominoType type;
 
     public Tetromino(TetrominoType type) {
         this.type = type;
@@ -72,12 +72,12 @@ public class Tetromino {
     }
 
     private int[][] rotateCW(int[][] m) {
-        int n = m.length;
-        int[][] res = new int[n][n];
+        int r = m.length, c = m[0].length;
+        int[][] res = new int[c][r];
 
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                res[j][n - i - 1] = m[i][j];
+        for (int i = 0; i < r; i++)
+            for (int j = 0; j < c; j++)
+                res[j][r - i - 1] = m[i][j];
 
         return res;
     }
